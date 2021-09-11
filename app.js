@@ -57,7 +57,9 @@ function deleteTask(e) {
 // Clear Task list
 function clearTasks(e) {
   if(confirm('Clear all tasks?')) {
-  taskList.innerHTML = ''
+    while(taskList.firstChild) {
+      taskList.removeChild(taskList.firstChild);
+    }
   }
 }
 
