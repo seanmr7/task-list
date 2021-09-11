@@ -9,6 +9,7 @@ const filer = document.querySelector('#filter');
 // Add event listeners
 form.addEventListener('submit', addTask);
 taskList.addEventListener('click', deleteTask);
+filter.addEventListener('keyup', filterTasks)
 
 // Add Task function
 function addTask(e){
@@ -49,5 +50,24 @@ function createTaskHTML(newTask){
 function deleteTask(e) {
   if(e.target.parentElement.classList.contains('delete-item')) {
     e.target.parentElement.parentElement.remove();
+  }
+}
+
+// Filter task function
+function filterTasks(e) {
+  const filterValue = e.target.value.toLowerCase();
+  const tasksArray = Array.from(document.querySelectorAll('li'));
+  
+  tasksArray.forEach(function(task) {
+    hideTasks(task, filterValue);
+  })
+}
+
+function hideTasks(task, filterValue) {
+  if(!task.innerText.toLowerCase().includes(filterValue)){
+    task.style.display = "none";
+  }
+  else if(task.innerText.toLowerCase().includes(filterValue)){
+    task.style.display = "block";
   }
 }
