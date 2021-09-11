@@ -3,13 +3,14 @@ const form = document.querySelector('#task-form');
 const task = document.querySelector('#task');
 const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('#clear-tasks');
-const filer = document.querySelector('#filter');
+const filterBar = document.querySelector('#filter');
 
 
 // Add event listeners
 form.addEventListener('submit', addTask);
 taskList.addEventListener('click', deleteTask);
-filter.addEventListener('keyup', filterTasks)
+clearBtn.addEventListener('click', clearTasks);
+filterBar.addEventListener('keyup', filterTasks);
 
 // Add Task function
 function addTask(e){
@@ -50,6 +51,13 @@ function createTaskHTML(newTask){
 function deleteTask(e) {
   if(e.target.parentElement.classList.contains('delete-item')) {
     e.target.parentElement.parentElement.remove();
+  }
+}
+
+// Clear Task list
+function clearTasks(e) {
+  if(confirm('Clear all tasks?')) {
+  taskList.innerHTML = ''
   }
 }
 
