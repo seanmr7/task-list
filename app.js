@@ -1,5 +1,6 @@
 // Define variables
 const form = document.querySelector('#task-form');
+const task = document.querySelector('#task');
 const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('#clear-tasks');
 const filer = document.querySelector('#filter');
@@ -7,24 +8,26 @@ const filer = document.querySelector('#filter');
 // Add event listeners
 form.addEventListener('submit', addTask);
 
-
 // Add Task function
 function addTask(e){
-    e.preventDefault();
-  
-  const task = document.querySelector('#task').value;
-  if(task === '') {
+  const newTask = task.value;
+  if(newTask.value === '') {
     alert('Please add a task');
   }
-  collection.appendChild(createTaskHTML(task));
+  e.preventDefault();
+  
+  taskList.appendChild(createTaskHTML(newTask));
+
+  // Clear form
+  task.value = '';
 
 }
 
-function createTaskHTML(task){
+function createTaskHTML(newTask){
   // Create new list item
   const li = document.createElement('li');
   li.classList.add('collection-item');
-  li.innerText = task;
+  li.innerText = newTask;
 
   // Create anchor and icon for deleting task
   const a = document.createElement('a');
