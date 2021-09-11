@@ -55,7 +55,7 @@ function deleteTask(e) {
 }
 
 // Clear Task list
-function clearTasks(e) {
+function clearTasks() {
   if(confirm('Clear all tasks?')) {
     while(taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
@@ -65,19 +65,19 @@ function clearTasks(e) {
 
 // Filter task function
 function filterTasks(e) {
-  const filterValue = e.target.value.toLowerCase();
-  const tasksArray = Array.from(document.querySelectorAll('li'));
+  const filterText = e.target.value.toLowerCase();
+  const tasksArray = document.querySelectorAll('li');
   
   tasksArray.forEach(function(task) {
-    hideTasks(task, filterValue);
+    hideTasks(task, filterText);
   })
 }
 
-function hideTasks(task, filterValue) {
-  if(!task.innerText.toLowerCase().includes(filterValue)){
+function hideTasks(task, filterText) {
+  if(!task.innerText.toLowerCase().includes(filterText)){
     task.style.display = "none";
   }
-  else if(task.innerText.toLowerCase().includes(filterValue)){
+  else if(task.innerText.toLowerCase().includes(filterText)){
     task.style.display = "block";
   }
 }
