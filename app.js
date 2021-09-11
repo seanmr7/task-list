@@ -1,6 +1,8 @@
 // Define variables
-const form = document.querySelector('form');
-const collection = document.querySelector('.collection');
+const form = document.querySelector('#task-form');
+const taskList = document.querySelector('.collection');
+const clearBtn = document.querySelector('#clear-tasks');
+const filer = document.querySelector('#filter');
 
 // Add event listeners
 form.addEventListener('submit', addTask);
@@ -8,9 +10,12 @@ form.addEventListener('submit', addTask);
 
 // Add Task function
 function addTask(e){
-  e.preventDefault();
+    e.preventDefault();
   
   const task = document.querySelector('#task').value;
+  if(task === '') {
+    alert('Please add a task');
+  }
   collection.appendChild(createTaskHTML(task));
 
 }
