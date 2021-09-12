@@ -7,10 +7,18 @@ const filterBar = document.querySelector('#filter');
 let tasks = setTasksArray();
 
 // Add event listeners
+document.addEventListener('DOMContentLoaded', setTasks);
 form.addEventListener('submit', addTask);
 taskList.addEventListener('click', deleteTask);
 clearBtn.addEventListener('click', clearTasks);
 filterBar.addEventListener('keyup', filterTasks);
+
+// Set DOM elements from Local Storage
+function setTasks() {
+  tasks.forEach(function(task) {
+    createTaskHTML(task);
+  })
+}
 
 // Add Task function
 function addTask(e){
@@ -97,9 +105,6 @@ function setTasksArray() {
     tasks = [];
   } else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
-    tasks.forEach(function(task) {
-      createTaskHTML(task);
-    })
   }
   return tasks
 }
