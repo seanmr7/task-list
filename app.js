@@ -4,7 +4,7 @@ const task = document.querySelector('#task');
 const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('#clear-tasks');
 const filterBar = document.querySelector('#filter');
-
+let tasks = setTasksArray();
 
 // Add event listeners
 form.addEventListener('submit', addTask);
@@ -20,8 +20,11 @@ function addTask(e){
   }
 
   e.preventDefault();
+
+  tasks.push(newTask);
+  setLocalStorage(tasks);;
   
-  taskList.appendChild(createTaskHTML(newTask));
+  createTaskHTML(newTask);
 
   // Clear form
   task.value = '';
@@ -44,13 +47,17 @@ function createTaskHTML(newTask){
   a.appendChild(i);
   li.appendChild(a);
 
-  return li;
+  taskList.appendChild(li);
+  
 }
 
 // Delete Task function
 function deleteTask(e) {
   if(e.target.parentElement.classList.contains('delete-item')) {
-    e.target.parentElement.parentElement.remove();
+    const removedTask = e.target.parentElement.parentElement;
+    removedTask.remove();
+    tasks.splice(tasks.indexOf(removedTask), 1);
+    setLocalStorage(tasks);
   }
 }
 
@@ -60,6 +67,8 @@ function clearTasks() {
     while(taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
     }
+    tasks = [];
+    setLocalStorage(tasks);
   }
 }
 
@@ -80,4 +89,21 @@ function hideTasks(task, filterText) {
   else if(task.innerText.toLowerCase().includes(filterText)){
     task.style.display = "block";
   }
+}
+
+function setTasksArray() {
+  let tasks;
+  if(localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+    tasks.forEach(function(task) {
+      createTaskHTML(task);
+    })
+  }
+  return tasks
+}
+
+function setLocalStorage(arr) {
+  localStorage.setItem('tasks', JSON.stringify(arr));
 }
